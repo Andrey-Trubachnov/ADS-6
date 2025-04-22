@@ -29,13 +29,11 @@ class TPQueue {
       tail->next = &item;
       (&item)->prev = tail;
       tail = (&item);
-    }
-    else if (temp == head) {
+    } else if (temp == head) {
       (&item)->next = head;
       head->prev = (&item);
       head = (&item);
-    }
-    else {
+    } else {
       (&item)->next = temp;
       (&item)->prev = temp->prev;
       temp->prev->next = (&item);
