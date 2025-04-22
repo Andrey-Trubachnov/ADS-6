@@ -15,29 +15,30 @@ class TPQueue {
   }
 
   void push(T&& item) {
+    T* citem = new T(std::move(item));
     if (isEmpty()) {
-      head = tail = &item;
+      head = tail = citem;
       return;
     }
 
     T* temp = head;
-    while (temp != nullptr && temp->prior >= (&item)->prior) {
+    while (temp != nullptr && temp->prior >= citem->prior) {
       temp = temp->next;
     }
 
     if (temp == nullptr) {
-      tail->next = &item;
-      (&item)->prev = tail;
-      tail = (&item);
+      tail->next = citem;
+      citem->prev = tail;
+      tail = citem;
     } else if (temp == head) {
-      (&item)->next = head;
-      head->prev = (&item);
-      head = (&item);
+      citem->next = head;
+      head->prev = citem;
+      head = citem;
     } else {
-      (&item)->next = temp;
-      (&item)->prev = temp->prev;
-      temp->prev->next = (&item);
-      temp->prev = (&item);
+      citem->next = temp;
+      citem->prev = temp->prev;
+      temp->prev->next = citem;
+      temp->prev = citem;
     }
   }
 
@@ -56,6 +57,12 @@ class TPQueue {
     head = head->next;
     head->prev = nullptr;
     return *t;
+  }
+
+  ~TPQueue() {
+    while (!isEmpty()) {
+      pop();
+    }
   }
 };
 
