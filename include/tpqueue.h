@@ -10,21 +10,21 @@ class TPQueue {
  public:
   TPQueue() : head(nullptr), tail(nullptr) {}
 
- bool isEmpty() {
+  bool isEmpty() {
    return head == nullptr;
- }
-
- void push(T&& item) {
+  }
+  
+  void push(T&& item) {
    if (isEmpty()) {
      head = tail = &item;
      return;
    }
-
+  
    T* temp = head;
    while (temp != nullptr && temp->prior >= (&item)->prior) {
      temp = temp->next;
    }
-
+  
    if (temp == nullptr) {
      tail->next = &item;
      (&item)->prev = tail;
@@ -39,24 +39,24 @@ class TPQueue {
      temp->prev->next = (&item);
      temp->prev = (&item);
    }
- }
-
- T pop() {
+  }
+  
+  T pop() {
    if (isEmpty()) {
      throw("Список пуст");
    }
-
+  
    T* t = head;
-
+  
    if (head == tail) {
      head = tail = nullptr;
      return *t;
    }
-
+  
    head = head->next;
    head->prev = nullptr;
    return *t;
- }
+  }
 };
 
 struct SYM {
